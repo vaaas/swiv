@@ -5,11 +5,13 @@ import { IO } from './io.ts'
 import { FileRepository } from './file-repository.ts'
 import { Router } from './router.ts'
 import { HttpServer } from './http-server.ts'
+import { collectFiles } from './collect-files.ts'
 
 export function main() {
-  const images = argv.slice(2)
-  provide(IOIdentifier, new IO())
-  provide(FileRepositoryIdentifier, new FileRepository(images))
+  const io = new IO()
+  const files = collectFiles(argv.slice(2), io)
+  provide(IOIdentifier, io)
+  provide(FileRepositoryIdentifier, new FileRepository(files))
   provide(RouterIdentifier, Router())
   HttpServer(8000, '0.0.0.0')
 }

@@ -12,9 +12,8 @@ export function Router(): IRouter {
       const page = indexLayout(imageList(fileRepository.all()))
       return Response.html(page)
     }
-    const pathname = url.slice(1)
-    if (fileRepository.has(pathname)) {
-      const blob = fileRepository.get(pathname)
+    if (fileRepository.has(url)) {
+      const blob = fileRepository.get(url)
       return new Response(200, { 'Content-Type': 'application/octet-stream' }, blob)
     }
 

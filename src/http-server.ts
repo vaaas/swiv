@@ -4,7 +4,7 @@ import { writeResponse } from "./response"
 
 export function HttpServer(port: number, host: string): Server {
   function requestListener(request: IncomingMessage, socket: ServerResponse) {
-    const url = request.url || '/'
+    const url = decodeURIComponent(request.url || '/')
     const response = router(url)
     writeResponse(socket, response)
   }
