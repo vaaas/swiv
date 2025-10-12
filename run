@@ -1,0 +1,13 @@
+#!/bin/sh
+name=swiv
+
+case $1 in
+    make:container)
+        podman build -f Containerfile.dev -t $name ./
+        ;;
+
+    npm)
+        shift 1
+        podman run -v ./:/opt/app -p 8000:8000 -i -t $name npm "$@"
+        ;;
+esac

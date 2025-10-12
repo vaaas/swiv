@@ -1,0 +1,12 @@
+{
+  "name": "@vas/swiv",
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "esbuild": "^0.25.10",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "build": "esbuild src/index.ts --platform=node --bundle --outfile=public/swiv.js",
+    "start": "node public/swiv.js"
+  }
+}
