@@ -1,3 +1,6 @@
+/** @ts-expect-error */
+import clientScript from './client-script.js';
+
 const stylesheet = `
   html {
     background: black;
@@ -11,7 +14,7 @@ const stylesheet = `
     flex-direction: row;
     justify-content: flex-start;
     margin: 0;
-    overflow: scroll;
+    overflow: auto;
     scroll-snap-type: x mandatory;
   }
 
@@ -41,6 +44,7 @@ export function indexLayout(body: string) {
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <title>swiv</title>
         <style>${stylesheet}</style>
+        <script>(${clientScript.toString()})()</script>
     </head>
 
     <body>
@@ -54,6 +58,11 @@ export function imageList(images: Array<string> | ReadonlyArray<string>): string
   return images.map(image).join('')
 }
 
-function image(src: string): string {
-  return `<figure><img loading="lazy" src="${src}"></figure>`
+function image(src: string, index: number): string {
+  return `<figure
+    id="${index}"
+    onvisible="updateHash(${index})"
+  >
+    <img loading="lazy" src="${src}">
+  </figure>`
 }

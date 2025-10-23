@@ -3,7 +3,7 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "strict": true,
-    "target": "es2022"
+    "target": "es2023"
   },
   "include": ["./src/**/*ts"]
 }
