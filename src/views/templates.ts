@@ -1,5 +1,5 @@
 /** @ts-expect-error */
-import clientScript from './client-script.js';
+import clientScript from '../assets/client-script.js';
 
 const stylesheet = `
   html {
@@ -59,10 +59,7 @@ export function imageList(images: Array<string> | ReadonlyArray<string>): string
 }
 
 function image(src: string, index: number): string {
-  return `<figure
-    id="${index}"
-    onvisible="updateHash(${index})"
-  >
+  return `<figure onvisible="updateHash(${index})">
     <img loading="lazy" src="${src}">
   </figure>`
 }

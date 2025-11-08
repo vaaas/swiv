@@ -1,22 +1,14 @@
 import { FileRepository } from "./file-repository.ts";
-import { IO } from "./io.ts";
-import { inject } from "./lib/provide-inject";
-import { IRouter } from "./router.ts";
+import { IO }             from "./io.ts";
+import { inject }         from "./lib/provide-inject";
 
-export const IOIdentifier = Symbol('IO')
-
-export function useIO(): IO {
-  return inject(IOIdentifier)
-}
-
+export const IOIdentifier             = Symbol('IO')
 export const FileRepositoryIdentifier = Symbol('FileRepository')
 
-export function useFileRepository(): FileRepository {
-  return inject(FileRepositoryIdentifier)
-}
+export const useIO
+  : () => IO
+  = () => inject(IOIdentifier)
 
-export const RouterIdentifier = Symbol('Router')
-
-export function useRouter(): IRouter {
-  return inject(RouterIdentifier)
-}
+export const useFileRepository
+  : () => FileRepository
+  = () => inject(FileRepositoryIdentifier)
