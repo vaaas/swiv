@@ -3,6 +3,8 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "strict": true,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "target": "es2023"
   },
   "include": ["./src/**/*ts"]

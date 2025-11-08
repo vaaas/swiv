@@ -10,4 +10,9 @@ case $1 in
         shift 1
         podman run -v ./:/opt/app -p 8000:8000 -i -t $name npm "$@"
         ;;
+
+    npx)
+        shift 1
+        podman run -v ./:/opt/app -i -t $name npx "$@"
+        ;;
 esac
