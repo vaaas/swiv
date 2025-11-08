@@ -1,13 +1,13 @@
-import { IO } from "./io.ts"
+import { IO }    from "./io.ts"
 import { useIO } from "./provisions.ts"
 
 export class FileRepository {
-  private readonly files: ReadonlyArray<string>
-  private readonly io: IO
+  private readonly files : ReadonlyArray<string>
+  private readonly io    : IO
 
   constructor(files: Array<string>) {
     this.files = files
-    this.io = useIO();
+    this.io    = useIO();
   }
 
   all(): ReadonlyArray<string> {

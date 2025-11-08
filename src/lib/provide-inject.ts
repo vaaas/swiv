@@ -1,5 +1,5 @@
 type Identifier = number | string | symbol
-type Context = Record<Identifier, unknown>
+type Context    = Record<Identifier, unknown>
 
 const Stack
   : Array<Context>

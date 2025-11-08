@@ -1,7 +1,7 @@
-import { Response } from "../http/response";
+import { Response }                  from "../http/response";
 import { IHandler, IRouteInstaller } from "../http/router";
-import { MIMETYPE } from "../mimetype";
-import { useFileRepository } from "../provisions";
+import { MIMETYPE }                  from "../mimetype";
+import { useFileRepository }         from "../provisions";
 
 export const fileEndpoint
   : () => IHandler<[string]>

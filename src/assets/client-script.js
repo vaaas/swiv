@@ -10,13 +10,22 @@ export default function script() {
     }
   }
 
+  function walk(f, root) {
+    f(root)
+    for (const child of root.children)
+      walk(f, child)
+  }
+
+  function install(element) {
+    if ('onvisible' in element.attributes)
+      observer.observe(element)
+  }
+
   function main() {
-    if (location.hash) {
+    if (location.hash)
       document.getElementById(location.hash.slice(1))
-              ?.scrollIntoView();
-    }
-    document.querySelectorAll('*[onvisible]')
-            .forEach(x => observer.observe(x))
+              ?.scrollIntoView()
+    queueMicrotask(() => walk(install, document.body))
   }
 
   window.onload = main

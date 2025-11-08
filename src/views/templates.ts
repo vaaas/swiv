@@ -1,65 +1,73 @@
 /** @ts-expect-error */
-import clientScript from '../assets/client-script.js';
+import clientScript   from '../assets/client-script.js';
+import { Stylesheet } from '../lib/css.js';
+import { h, HTMLDocument, HTMLNode }
+                      from '../lib/html.js';
 
-const stylesheet = `
-  html {
-    background: black;
-    overflow: hidden;
-    scrollbar-width: none;
-  }
+const stylesheet = new Stylesheet()
+  .rule('html', {
+    'background'      : 'black' ,
+    'overflow'        : 'hidden',
+    'scrollbar-width' : 'none'  ,
+  })
+  .rule('body', {
+    'align-items'      : 'center'     ,
+    'display'          : 'flex'       ,
+    'flex-direction'   : 'row'        ,
+    'justify-content'  : 'flex-start' ,
+    'margin'           : '0'          ,
+    'overflow'         : 'auto'       ,
+    'scroll-snap-type' : 'x mandatory',
+  })
+  .rule('figure', {
+    'align-items'       : 'center',
+    'display'           : 'flex'  ,
+    'height'            : '100dvh',
+    'justify-content'   : 'center',
+    'margin'            : '0'     ,
+    'scroll-snap-align' : 'start' ,
+    'width'             : '100dvw',
+  })
+  .rule('img', {
+    'height'     : 'inherit',
+    'object-fit' : 'contain',
+    'width'      : 'inherit',
+  })
+  .toString()
 
-  body {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin: 0;
-    overflow: auto;
-    scroll-snap-type: x mandatory;
-  }
+const IEFE
+  : (f: Function) => string
+  = f => `(${f.toString()}())`
 
-  figure {
-    align-items: center;
-    display: flex;
-    height: 100dvh;
-    justify-content: center;
-    margin: 0;
-    scroll-snap-align: start;
-    width: 100dvw;
-  }
+const script = IEFE(clientScript)
 
-  img {
-    height: inherit;
-    object-fit: contain;
-    width: inherit;
-  }
-`
+export const indexLayout
+  : (body: Array<HTMLNode>) => string
+  = body =>
+    new HTMLDocument().head([
+                        h('meta', { charset: 'utf-8' }),
+                        h('meta', {
+                          name    : 'viewport',
+                          content : 'width=device-width, initial-scale=1'
+                        }),
+                        h('title', {}, ['swiv']),
+                        h('style', {}, [stylesheet]),
+                        h('script', {}, [script]),
+                      ])
+                      .body(body)
+                      .toString()
 
-export function indexLayout(body: string) {
-  return `
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='utf-8'>
-        <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <title>swiv</title>
-        <style>${stylesheet}</style>
-        <script>(${clientScript.toString()})()</script>
-    </head>
+export const imageList
+  : (images: Array<string> | ReadonlyArray<string>) => Array<HTMLNode>
+  = images => images.map(image)
 
-    <body>
-      ${body}
-    </body>
-</html>
-  `
-}
-
-export function imageList(images: Array<string> | ReadonlyArray<string>): string {
-  return images.map(image).join('')
-}
-
-function image(src: string, index: number): string {
-  return `<figure onvisible="updateHash(${index})">
-    <img loading="lazy" src="${src}">
-  </figure>`
-}
+const image
+  : (src: string, index: number) => HTMLNode
+  = (src, index) => h(
+    'figure',
+    {
+      id: index.toString(),
+      onvisible: `updateHash(${index})`
+    },
+    [ h('img', { loading: 'lazy', src }) ]
+  )
