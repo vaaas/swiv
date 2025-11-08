@@ -5,7 +5,7 @@ export const sort
   = f => xs => xs.toSorted(f)
 
 export const alphabetically
-  : <X extends string>(a: X, b: X) => -1 | 0 | 1
+  : ISortingFunction<string>
   = (a, b) => {
     if (a === b) {
       return 0

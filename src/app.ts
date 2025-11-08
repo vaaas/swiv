@@ -1,5 +1,5 @@
 import { argv } from 'node:process'
-import { provide } from './provide-inject.ts'
+import { provide } from './lib/provide-inject'
 import { FileRepositoryIdentifier, IOIdentifier, RouterIdentifier } from './provisions.ts'
 import { IO } from './io.ts'
 import { FileRepository } from './file-repository.ts'
